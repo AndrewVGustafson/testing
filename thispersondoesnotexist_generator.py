@@ -10,7 +10,7 @@ def timed(func):
     def wrapper(*args):
         start_time = default_timer()
         func(*args)
-        print(f"Time: {default_timer() - start_time}")
+        print(f"Time {func.__name__}(): {default_timer() - start_time}")
     return wrapper
     
 
@@ -55,7 +55,7 @@ def merge_images(amount):
 
 def main():
     amount = 3
-    get_images_async(amount)
+    # get_images_async(amount)
     get_images(amount)
     merge_images(amount)
 

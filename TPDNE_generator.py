@@ -23,8 +23,8 @@ def is_square(x):
 
 @timed
 def merge_images(amount):
-    layout =[]
-    # np
+    # layout =[]
+    np
 
     combined_img = Image.new("RGB", (ASPECT_RATIO, ASPECT_RATIO * (amount)), "white")
     for i in range(amount):

@@ -20,9 +20,9 @@ def fetch(amount):
 
 
 def main():
-    # start = time.perf_counter()
-    # asyncio.run(async_fetch(3))
-    # print(f"Asyncronous Time: {time.perf_counter() - start}")
+    start = time.perf_counter()
+    asyncio.run(async_fetch(3))
+    print(f"Asyncronous Time: {time.perf_counter() - start}")
 
     start = time.perf_counter()
     fetch(3)

@@ -4,7 +4,7 @@ def gen(n):
     yield x2
     yield x1
 
-    for i in range(2, n+1):
+    for _ in range(2, n+1):
         yield x2 + x1
         x2, x1 = x1, x2 + x1
 

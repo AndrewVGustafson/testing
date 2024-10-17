@@ -12,31 +12,29 @@ DICT_FILE_PATH = PROJECT_DIR / 'dictionary.json'
 
 def get_dict_data() -> list:
     with open(DICT_FILE_PATH, "r") as file:
-        data: list = json.load(file)
-        data = data["dictionary"]
-    return data
+        words: list = json.load(file)
+        words = words["dictionary"]
+    return words
 
 
-
-
-def x_wrong(letters: list, data: list) -> list:
+def x_wrong(letters: list, words: list) -> list:
     letters = list(set(letters))
-    new_words = data
+    purged_words = words
     for letter in letters:
-        new_words = [word for word in new_words if letter not in word]
-    return new_words
+        purged_words = [word for word in purged_words if letter not in word]
+    return purged_words
 
-def x_wrong_location(blocks: dict, data: list) -> list:
-    new_words = data
+def x_wrong_location(blocks: dict, words: list) -> list:
+    purged_words = words
     for letter, position in blocks:
-        new_words = [word for word in new_words if letter in word and letter not in word[position]]
-    return new_words
+        purged_words = [word for word in purged_words if letter in word and letter not in word[position]]
+    return purged_words
 
-def x_correct(blocks: dict, data) -> list:
-    new_words = data
+def x_correct(blocks: dict, words: list) -> list:
+    purged_words = words
     for letter, position in blocks:
-        new_words = [word for word in new_words if letter in word and letter in word[position]]
-    return new_words
+        purged_words = [word for word in purged_words if letter in word and letter in word[position]]
+    return purged_words
 
 
 def get_wrong() -> list[str]:

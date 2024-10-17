@@ -26,7 +26,7 @@ class AutoSolver():
             starting_words.append(None)
         return starting_words
 
-    def solve(self, should_replay: bool = False, guessing_interval: float = 1.45, starting_words: list = ["tales"]) -> None:
+    def solve(self, replay_forever: bool = False, guessing_interval: float = 1.45, starting_words: list = ["tales"]) -> None:
 
         self.starting_words = self.get_starting_words(starting_words)
         self.purged_words = self.words
@@ -51,8 +51,9 @@ class AutoSolver():
             if self.purged_words == 1:
                 break
 
-        if should_replay:
+        if replay_forever:
             self.click_available_element(self.play_again_button, self.play_again_button_id)
+            self.solve(replay_forever=True, guessing_interval=guessing_interval, starting_words=starting_words)
 
 
     def get_guess(self, row: int) -> str:
@@ -83,4 +84,4 @@ if __name__ == "__main__":
     URL = 'https://speedle.rahuljk.com/'
 
     auto_solver = AutoSolver(driver, URL)
-    auto_solver.solve(should_replay=True)
+    auto_solver.solve(starting_words=STARTING_WORDS, replay_forever=True)

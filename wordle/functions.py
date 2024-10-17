@@ -113,3 +113,13 @@ def better_guess(words: list) -> str:
     else:
         return words[0]
     
+def better_guesses(words: list) -> str:
+    better_words = []
+    for word in words:
+        if len(list(set(word))) == 5:
+            better_words.append(word)
+    
+    if better_words != []:
+        return better_words
+    else:
+        return words

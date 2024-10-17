@@ -5,18 +5,18 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from pathlib import Path
+PROJECT_DIR = Path(__file__).parent
+DICT_FILE_PATH = PROJECT_DIR / 'dictionary.json'
+
 
 def get_dict_data() -> list:
-    with open("dictionary.json", "r") as file:
+    with open(DICT_FILE_PATH, "r") as file:
         data: list = json.load(file)
         data = data["dictionary"]
     return data
 
-def click_available_element(element, element_id, driver) -> None:
-    WebDriverWait(driver, 5).until(
-        EC.element_to_be_clickable((By.ID, element_id))
-    )
-    element.click()
+
 
 
 def x_wrong(letters: list, data: list) -> list:
@@ -82,9 +82,6 @@ def get_tiles_data(driver) -> dict[str, Any]:
     
     return tiles_data
 
-def send_word(word: str, actions) -> None:
-    actions.send_keys(word + Keys.ENTER)
-    actions.perform()
 
 def filter_words(tiles_data: dict[str, Any], words: list):
     purged_words = words

@@ -1,17 +1,25 @@
+# from wordle.functions import *
 from functions import *
 from selenium import webdriver 
-from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 from time import sleep
 
 class AutoSolver():
     def __init__(self, driver: webdriver.Chrome, URL) -> None:
         
         self.driver = driver
+        # self.driver.execute_cdp_cmd('Debugger.enable', {})
+        # self.driver.execute_cdp_cmd('Debugger.setBreakpointByUrl', {'lineNumber': 95, 'url':'https://speedle.rahuljk.com/script.js'})
+        # self.driver.execute_script(get_js_commands())
         self.driver.get(URL)
-        self.driver.execute_script("window.onbeforeunload = function() {};")
+        # driver.execute_cdp_cmd('Debugger.disable', {})
+        # self.driver.execute_script("window.onbeforeunload = function() {};")
         self.actions = ActionChains(self.driver)
 
         self.words = get_dict_data()
@@ -57,7 +65,7 @@ class AutoSolver():
 
 
     def get_guess(self, row: int) -> str:
-        tile_data = get_tiles_data(self.driver)
+        tile_data = self.get_tiles_data()
         self.purged_words = filter_words(tile_data, self.purged_words)
         if row <= BETTER_GUESS_CUTOFF:
             return better_guess(self.purged_words)
@@ -74,13 +82,39 @@ class AutoSolver():
         )
         element.click()
 
+    def get_tiles_data(self) -> dict[str, Any]:
+        tile_elements = self.driver.find_elements(By.CLASS_NAME, "tile")
+
+        tiles_data = {
+            "wrong": "",
+            "wrong-location": [],
+            "correct": []
+        }
+
+        for tile in tile_elements:
+            letter = tile.text.lower()
+            if not letter:
+                continue
+
+            data_state = tile.get_attribute("data-state")
+            pos = tile_elements.index(tile) % 5
+            block = (letter, pos)
+
+            if data_state != "wrong":
+                tiles_data[data_state].append(block)
+            else:
+                tiles_data["wrong"] += letter
+        
+        return tiles_data
+
 if __name__ == "__main__":
     # STARTING_WORDS = ["cones", "trial"]
-    STARTING_WORDS = ["tales"]
+    STARTING_WORDS = ["slant"]
     BETTER_GUESS_CUTOFF = 3
     GUESSING_INTERVAL = 1.45
 
     driver = webdriver.Chrome(options=Options().add_argument('--log-level=3'))
+    # options.enable_bidi = True
     URL = 'https://speedle.rahuljk.com/'
 
     auto_solver = AutoSolver(driver, URL)

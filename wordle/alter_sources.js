@@ -1,3 +1,8 @@
+// verify working
+console.log("hello")
+
+
+// console.log(flipTile)
 // makes them all flip at once
 flipTile = function(tile, index, array, guess) {
     const letter = tile.dataset.letter
@@ -39,3 +44,5 @@ flipTile = function(tile, index, array, guess) {
 
 // adds reference to main scope
 window.flipTile = flipTile
+
+console.log("done")

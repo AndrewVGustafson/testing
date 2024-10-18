@@ -1,13 +1,10 @@
 import json
 from typing import Any
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 from pathlib import Path
 PROJECT_DIR = Path(__file__).parent
 DICT_FILE_PATH = PROJECT_DIR / 'dictionary.json'
+JS_FILE_PATH = PROJECT_DIR / 'alter_sources.js'
 
 
 def get_dict_data() -> list:
@@ -16,6 +13,9 @@ def get_dict_data() -> list:
         words = words["dictionary"]
     return words
 
+def get_js_commands() -> str:
+    with open(JS_FILE_PATH, "r") as file:
+        return file.read()
 
 def x_wrong(letters: list, words: list) -> list:
     letters = list(set(letters))
@@ -55,33 +55,7 @@ def get_correct() -> list[tuple[str, int]]:
     return correct_letters
 
 
-def get_tiles_data(driver) -> dict[str, Any]:
-    tile_elements = driver.find_elements(By.CLASS_NAME, "tile")
-
-    tiles_data = {
-        "wrong": "",
-        "wrong-location": [],
-        "correct": []
-    }
-
-    for tile in tile_elements:
-        letter = tile.text.lower()
-        if not letter:
-            continue
-
-        data_state = tile.get_attribute("data-state")
-        pos = tile_elements.index(tile) % 5
-        block = (letter, pos)
-
-        if data_state != "wrong":
-            tiles_data[data_state].append(block)
-        else:
-            tiles_data["wrong"] += letter
-    
-    return tiles_data
-
-
-def filter_words(tiles_data: dict[str, Any], words: list):
+def filter_words(tiles_data: dict[str, Any], words: list) -> list:
     purged_words = words
     for data_state, values in tiles_data.items():
         if data_state == "wrong":

@@ -59,8 +59,8 @@ class AutoSolver():
             if self.purged_words == 1:
                 break
 
+        self.click_available_element(self.play_again_button, self.play_again_button_id)
         if replay_forever:
-            self.click_available_element(self.play_again_button, self.play_again_button_id)
             self.solve(replay_forever=True, guessing_interval=guessing_interval, starting_words=starting_words)
 
 
@@ -108,13 +108,11 @@ class AutoSolver():
         return tiles_data
 
 if __name__ == "__main__":
-    # STARTING_WORDS = ["cones", "trial"]
-    STARTING_WORDS = ["slant"]
+    STARTING_WORDS = ["cones", "trial"]
     BETTER_GUESS_CUTOFF = 3
     GUESSING_INTERVAL = 1.45
 
     driver = webdriver.Chrome(options=Options().add_argument('--log-level=3'))
-    # options.enable_bidi = True
     URL = 'https://speedle.rahuljk.com/'
 
     auto_solver = AutoSolver(driver, URL)

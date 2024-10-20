@@ -1,5 +1,6 @@
 import trio # async library that selenium uses
 from selenium import webdriver
+
 import selenium.webdriver.common.devtools.v127 as cdp
 from selenium.webdriver.remote.bidi_connection import BidiConnection
 
@@ -7,7 +8,7 @@ from selenium.webdriver.remote.bidi_connection import BidiConnection
 
 async def start_listening(listener):
     async for event in listener:
-        # print(event.loader_id)
+        print(str(event.script_id))
         pass
 
 
@@ -22,7 +23,7 @@ async def main():
         await session.execute(devtools.network.enable())
 
         # listener = session.listen(devtools.fetch.RequestPaused)
-        listener = session.listen(devtools.network.ResponseReceived)
+        listener = session.listen(devtools.debugger.ScriptParsed)
         async with trio.open_nursery() as nursery:
             nursery.start_soon(start_listening, listener) # start_listening blocks, so we run it in another coroutine
 

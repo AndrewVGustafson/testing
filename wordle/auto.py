@@ -14,11 +14,7 @@ class AutoSolver():
     def __init__(self, driver: webdriver.Chrome, URL) -> None:
         
         self.driver = driver
-        # self.driver.execute_cdp_cmd('Debugger.enable', {})
-        # self.driver.execute_cdp_cmd('Debugger.setBreakpointByUrl', {'lineNumber': 95, 'url':'https://speedle.rahuljk.com/script.js'})
-        # self.driver.execute_script(get_js_commands())
         self.driver.get(URL)
-        # driver.execute_cdp_cmd('Debugger.disable', {})
         # self.driver.execute_script("window.onbeforeunload = function() {};")
         self.actions = ActionChains(self.driver)
 

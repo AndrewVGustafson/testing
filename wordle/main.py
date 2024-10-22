@@ -1,6 +1,6 @@
 from selenium import webdriver 
 from selenium.webdriver.chrome.options import Options
-from wordle.auto import AutoSolver
+from auto_solver import AutoSolver
 
 
 if __name__ == "__main__":

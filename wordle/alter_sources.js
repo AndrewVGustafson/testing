@@ -1,9 +1,8 @@
 // verify working
-console.log("hello")
+console.log("Editing js code...")
 
 
-// console.log(flipTile)
-// makes them all flip at once
+// Makes each tile flip simultaneously
 flipTile = function(tile, index, array, guess) {
     const letter = tile.dataset.letter
   const key = keyboard.querySelector(`[data-key="${letter}"i]`)
@@ -41,8 +40,7 @@ flipTile = function(tile, index, array, guess) {
   )
 }
 
-
 // adds reference to main scope
 window.flipTile = flipTile
 
-console.log("done")
+console.log("Finished.")

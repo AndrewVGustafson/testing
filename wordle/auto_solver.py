@@ -1,5 +1,3 @@
-# from wordle.functions import *
-from functions import *
 from selenium import webdriver 
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.remote.webelement import WebElement
@@ -8,7 +6,12 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
+
+from utils import get_from_file
 from time import sleep
+from typing import Any
+
+from utils import get_from_file, purge
 
 class AutoSolver():
     def __init__(self, driver: webdriver.Chrome, URL) -> None:
@@ -18,7 +21,7 @@ class AutoSolver():
         # self.driver.execute_script("window.onbeforeunload = function() {};")
         self.actions = ActionChains(self.driver)
 
-        self.words = get_dict_data()
+        self.words = get_from_file.get_dict_data()
         self.purged_words = self.words
         self.start_button_id = "startButton"
         self.play_again_button_id = "playAgainButton"
@@ -62,9 +65,9 @@ class AutoSolver():
 
     def get_guess(self, row: int) -> str:
         tile_data = self.get_tiles_data()
-        self.purged_words = filter_words(tile_data, self.purged_words)
+        self.purged_words = purge.filter_words(tile_data, self.purged_words)
         if row <= BETTER_GUESS_CUTOFF:
-            return better_guess(self.purged_words)
+            return purge.better_guess(self.purged_words)
         else:
             return self.purged_words[0]
 

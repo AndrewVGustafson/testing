@@ -9,7 +9,7 @@ class ManualSolver():
         self.g, self.y, self.l, self.r = Fore.GREEN, Fore.LIGHTYELLOW_EX, Fore.LIGHTBLACK_EX, Fore.RED
 
     def run_solver(self):
-        print(f"Welcome to the {self.g}W{self.y}o{self.l}r{self.g}d{self.y}l{self.l}e{Fore.RESET} Solver!")
+        print(f"Welcome to the {self.g}W{Fore.YELLOW}o{self.l}r{self.g}d{Fore.YELLOW}l{self.l}e{Fore.RESET} Solver!")
         try:
             while True:
                 self.do_selection()
@@ -60,7 +60,7 @@ class ManualSolver():
                 exit()
 
             case 'n':
-                print("Resetting words...\n")
+                print(self.r + "Resetting words...\n" + self.g)
                 self.purged_words = self.words
 
             case 's':
@@ -93,10 +93,10 @@ class ManualSolver():
             print("Getting save data...")
             with open("wordle_save", 'r') as file:
                 self.purged_words = json.load(file)
-            print("Loaded Save Data!\n")
+            print(self.g + "Loaded Save Data!\n" + self.g)
 
         except FileNotFoundError:
-            print("There is no save data.\n")
+            print(self.r + "There is no save data.\n" + self.g)
             self.save_load_dialogue(self.purged_words)
 
     def get_wrong(self) -> list[str]:
